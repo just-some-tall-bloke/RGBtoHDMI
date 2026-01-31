@@ -23,6 +23,18 @@ A comprehensive open-source hardware and software solution for converting legacy
 
 The RGBtoHDMI project is a sophisticated video conversion solution designed specifically for retrocomputing enthusiasts who want to connect their vintage computers to modern HDMI displays without compromising image quality. Unlike generic composite-to-HDMI converters that often introduce artifacts, lag, and poor color reproduction, RGBtoHDMI provides:
 
+### Recent Updates (Latest Version)
+
+The project has recently been enhanced with significant new features and system support:
+
+- **New TMS99XX Support**: Added comprehensive support for TMS9918A/TMS9928A/TMS9929A systems including ColecoVision, MSX1, Memotech MTX, and NABU Computer with lumacode processing
+- **Enhanced Spectrum Support**: Expanded Sinclair Spectrum compatibility including 48K, 128K, +2, +2A, and +3 models with custom RGB adapters
+- **Improved PET Support**: Refined Commodore PET profiles with better 40-column CRTC support and removed obsolete configurations
+- **15Khz Resolution Support**: Native support for 15Khz arcade and console video modes with improved scaling
+- **OSD Enhancements**: Enhanced on-screen display with overscan compensation for 240p/288p modes and better menu positioning
+- **Sync Detection Improvements**: Better sync signal detection with real-time status display and improved compatibility
+- **Auto-scaling Fixes**: Resolved monitor power-up EDID issues and improved automatic scaling behavior
+
 - **Pixel-perfect conversion**: Each RGB pixel is sampled and converted with precise timing
 - **Zero lag**: Direct digital conversion eliminates processing delays common in other solutions
 - **Multiple platform support**: Compatible with various retro computers through different hardware adapters
@@ -46,12 +58,16 @@ RGBtoHDMI supports a wide range of vintage computers through different hardware 
 - **Amiga**: 12-bit buffered pickup solutions for various Amiga models
 - **Atari ST**: 12-bit buffered and unbuffered pickup options
 - **Commodore 128**: Adapter support for 40-column mode through VIC-IIe integration
+- **Sinclair Spectrum**: Multiple models including 48K, 128K, +2, +2A, +3
+- **TMS99XX Systems**: ColecoVision, MSX1, Memotech MTX, NABU Computer
+- **Commodore PET**: Enhanced support for 40-column CRTC models with new profiles
 
 ### Video Signal Types
 - **RGB TTL**: Direct digital RGB signals (6-bit, 8-bit, and 12-bit variants)
 - **RGB Analog**: Analog RGB signals with proper level conversion
 - **YUV**: YUV video signal support for compatible systems
 - **Various Sync Signals**: Support for different horizontal and vertical sync configurations
+- **15Khz Modes**: Enhanced support for 15Khz arcade and console systems
 
 ## Hardware Requirements
 
@@ -105,6 +121,8 @@ RGBtoHDMI supports a wide range of vintage computers through different hardware 
 - **Profile Selection**: Easy switching between saved configurations
 - **System Information**: Display current settings and hardware status
 - **Debug Mode**: Advanced diagnostic tools for troubleshooting
+- **Enhanced OSD**: Improved menu positioning with overscan compensation for 240p/288p modes
+- **Sync Status Display**: Real-time sync detection status in source summary
 
 ### Advanced Features
 - **Double Resolution**: Enhanced resolution modes for supported systems
@@ -112,6 +130,8 @@ RGBtoHDMI supports a wide range of vintage computers through different hardware 
 - **Color Enhancement**: Adjustable color temperature and saturation
 - **Video Filters**: Optional filtering for noise reduction and edge enhancement
 - **Frame Rate Control**: Support for different refresh rates (50Hz/60Hz)
+- **15Khz Support**: Native support for 15Khz arcade and console video modes
+- **Auto-scaling**: Intelligent scaling with monitor power-up EDID detection and compensation
 
 ## Project Structure
 
@@ -119,9 +139,14 @@ RGBtoHDMI supports a wide range of vintage computers through different hardware 
 RGBtoHDMI/
 ├── src/                          # Main source code
 │   ├── cpld_*.c                  # CPLD interface implementations
-│   ├── geometry.c                # Video geometry handling
-│   ├── osd.c                     # On-screen display system
-│   ├── rgb_to_hdmi.c             # Main application
+│   ├── geometry.c                # Video geometry handling (enhanced with 15Khz support)
+│   ├── osd.c                     # On-screen display system (with overscan compensation)
+│   ├── rgb_to_hdmi.c             # Main application (with sync detection improvements)
+│   ├── scripts/Profiles/         # System-specific configuration profiles
+│   │   ├── TMS9918A_*_*_/        # TMS99XX system profiles (ColecoVision, MSX1, etc.)
+│   │   ├── Sinclair_/            # Spectrum computer profiles
+│   │   ├── Commodore_/           # Commodore system profiles (enhanced PET support)
+│   │   └── ...                   # Additional system profiles
 │   └── ...                       # Additional source files
 ├── vhdl*/                         # CPLD firmware designs
 │   ├── vhdl_RGB_6bit/           # 6-bit RGB CPLD design
@@ -131,10 +156,11 @@ RGBtoHDMI/
 ├── kicad*/                        # Hardware design files
 │   ├── kicad/                    # Main HAT designs
 │   ├── kicad_*_adapter/         # Various adapter boards
-│   └── kicad_*_buffer/          # Signal buffer designs
+│   ├── kicad_*_buffer/          # Signal buffer designs
+│   └── kicad_atom/               # Acorn Atom-specific boards
 ├── tools/                        # Build and development tools
 ├── contrib/                      # Community contributions
-└── docs/                         # Documentation
+└── docs/                         # Documentation (enhanced with new system guides)
 ```
 
 ### Key Components
@@ -419,6 +445,8 @@ The system supports:
 - Verify correct sync polarity settings
 - Try different sync edge detection modes
 - Check for signal interference
+- Monitor sync status in OSD source summary page
+- Ensure proper sync detection for 15Khz modes
 
 **System Stability**
 - Ensure adequate power supply
